@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	
+			<!--<link rel="stylesheet" type="text/css" href ="./style.css">-->
+
+		<link rel="stylesheet" type="text/css" href ="./style.css">
+	
+     
+
+		<!--record data, draw the css style accordingly here -->
+		
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>  <!--jquery google-->
+		<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script> <!--jquery in China, works in US for now-->
+		<script src="jquery-3.2.1.slim.min.js"></script>   <!--jQuery for offline use-->
+		
+
+		<script src="script.js"></script> <!--load js funciton-->
+		
+		
+	</head>
+	
+	<body>
+		
+		<div id="calculator">
+			<!--<div id="calculator_headings">-->
+				<div class="calculator_header" id="CO2_calculator_header" onclick="calculator_switch('CO2')">CO2</div>
+				<div class="calculator_header" id="PM2_5_calculator_header" onclick="calculator_switch('PM2.5')">PM2.5</div>
+			<!--</div>-->
+			
+			
+			<!--CO2 calculator-->
+			<div id="CO2_calculator" class="calculator_input">
+								
+				<div class="result_div" >
+					<form>
+						<table>
+							<tr>
+								<th>item</th>
+								<th></th>
+								<th>unit</th>
+								<th  class="button" onclick="open_window('#CO2_formula')">Click to see derivation</th>
+								
+							</tr>
+							<tr><!--output-->
+								<td class="table_heading">Result</td>
+							</tr>
+							<tr>
+								<td class="t_c1">CO2 Concentration after t</td>
+								<td id="CO2_C_t" class = "c_table_input"></td>
+								<td class="t_c3">ppm</td>
+								<td class="t_c4" ><img src="equation/CO2_e4.png" class="equation"></td>
+							</tr>
+							<tr>
+								<td class="t_c1">Steady State CO2 Concentration</td>
+								<td id="CO2_steady" class = "c_table_input"></td>
+								<td>ppm</td>
+								<td>when t->∞<img src="equation/CO2_e5.png" class="equation" ></td>
+							</tr>
+							<tr><!--input-->
+								<td class="table_heading">Data Input</td>
+							</tr>
+							<tr> <!--air quality info-->
+								<td class="table_heading">Air Quality Info</td>
+							</tr>
+							<tr>
+								<td>Outdoor CO2 Level</td>               	
+								<td><input class = "c_table_input" id="CO2_Co" value=250></td>
+								<td>ppm</td>
+								<td>Co</td>
+							</tr>
+							<tr>
+								<td class="t_c1"	>Initial Indoor CO2 Level</td>
+								<td><input class = "c_table_input" id="CO2_Ci" value=360></td>
+								<td>ppm</td>
+								<td>Ci</td>
+							</tr>
+							
+							<tr> <!--CO2 Production-->
+								<td class="table_heading">CO2 Production</td>
+							</tr>
+							<tr>
+								<td>Number of People in Room</td>
+								<td><input type="number" class = "c_table_input" id="CO2_n" value=40 ></td>
+								<td></td>
+								<td>n</td>
+							</tr>
+							
+							<tr>
+								<td>CO2 Production Per Person</td>
+								<td><input type="number" class = "c_table_input" id="CO2_Qh" value=0.02></td>
+								<td>m<sup>3</sup>/h</td>
+								<td>Qh</td>
+							</tr>
+							
+							<tr> <!--Room information-->
+								<td class="table_heading">Room Information</td>
+							</tr>
+							<tr>
+								<td>Ventilation Rate Per Person</td>
+								<td><input type="number" id="CO2_ventilation" value=2.5 class = "c_table_input"></td>
+								<td>L/s</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>Total Ventilation Rate</td>
+								<td id="CO2_Q" class = "c_table_input"></td>
+								<td>m<sup>3</sup>/h</td>
+								<td>Q</td>
+							</tr>
+							<tr>
+								<td>Room Area</td>
+								<td><input type="number" class = "c_table_input" id="CO2_Area" value=40 step="0.01"></td>
+								<td>m<sup>2</sup></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Room height</td>
+								<td><input type="number" class = "c_table_input" id="CO2_height" value=2.8 step="0.01"></td>
+								<td>m</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Room Volume</td>
+								<td class = "c_table_input" id="CO2_V"></td>
+								<td>m<sup>3</sup></td>
+								<td>V</td>
+							</tr>
+							
+							<tr> <!--Time-->
+								<td class="table_heading">Time</td>
+							</tr>
+							
+							<tr>
+								<td>Time After Purifier Start</td>
+								<td><input class = "c_table_input" id="CO2_t" value=0.5></td>
+								<td>h</td>
+								<td>t</td>
+							</tr>
+							
+							
+						</table>
+						
+						<div class="calculator_button" id="CO2_button" onclick="CO2_calculation()">start</div>
+					</form>
+				</div>					
+				
+				
+				<div class="data_reference">
+					
+						<img class="reference_pic" src="calculator_pic/CO2_model.png" alt="pic for CO2 modeling">
+					<table class="reference_table">
+					<tr>
+						<td class="table_heading">ppm:</td>
+						<td class="reference_content">This unit means parts per million. 1 ppm = 0.0001%.</td>
+					</tr>
+					
+					<tr>
+						<td class="table_heading">Outdoor CO2 level:</td>
+						<td class="reference_content"><a href="https://www.kane.co.uk/knowledge-centre/what-are-safe-levels-of-co-and-co2-in-rooms	">Usually, outdoor CO2 level is around 250~350 ppm. ^^</a></td>
+					</tr>
+					<tr>
+						<td class="table_heading">CO2 threadhold:</td>
+						<td class="reference_content">1,000-2,000ppm	Complaints of drowsiness and poor air.
+<br>2,000-5,000 ppm	Headaches, sleepiness and stagnant, stuffy air. Poor concentration, loss of attention, increased heart rate and slight nausea may also be present.
+<br>5,000	Workplace exposure limit (as 8-hour TWA) in most jurisdictions.
+<br>>40,000 ppm	Exposure may lead to serious oxygen deprivation resulting in permanent brain damage, coma, even death.
+						<br><a href="https://www.kane.co.uk/knowledge-centre/what-are-safe-levels-of-co-and-co2-in-rooms">From www.kane.co.uk</a>
+						</td>
+					</tr>
+					
+					<tr>
+						<td class="table_heading"> Recommended ventilation rate:   </td>
+						<td class="reference_content"> 2.5 L/s/person at office space
+<br> 5  L/s/person at classroom, school settings
+<br> 10 L/s/person at dance floor, exercise rooms
+<br><a href="https://en.wikipedia.org/wiki/Ventilation_(architecture)">from wikipedia</a>
+						</td>
+					</tr>
+					
+					
+					
+					
+					</table>
+				</div>
+			
+			</div>
+			
+			<!--PM2.5 calculator-->
+			<div id="PM2_5_calculator" class="calculator_input">
+				<form>
+				
+					
+					<div class="result_div" >
+						<table>
+							<tr>
+								<th>item</th>
+								<th></th>
+								<th>unit</th>
+								<th  class="button" onclick="open_window('#PM2_5_formula')">Click to see derivation</th>
+								
+							</tr>
+							<tr><!--output-->
+								<td class="table_heading">Result</td>
+							</tr>
+							<tr>
+								<td class="t_c1">PM2.5 Concentration after t</td>
+								<td id="PM2_5_C_t" class = "c_table_input"></td>
+								<td class="t_c3">ppm</td>
+								<td class="t_c4"><img src="equation/PM_e3.png" class="equation"></td>
+								
+								<!--<img src="equation/PM_C.png" class="equation">
+								<br> where <img src="equation/PM_A.png" class="equation">-->
+							</tr>
+							<tr>
+								<td class="t_c1">Steady State PM2.5 Concentration</td>
+								<td id="PM2_5_steady" class = "c_table_input"></td>
+								<td>ppm</td>
+								<td>when t->∞: <img src="equation/PM_e4.png" class="equation"></td>
+							</tr>
+							<tr><!--input-->
+								<td class="table_heading">Data Input</td>
+							</tr>
+							<tr> <!--air quality info-->
+								<td class="table_heading">Air Quality Info</td>
+							</tr>
+							<tr>
+								<td>Outdoor PM2.5 Level</td>
+								<td><input class = "c_table_input" id="PM2_5_Co" value=500></td>
+								<td>ppm</td>
+								<td>Co</td>
+							</tr>
+							<tr>
+								<td>Initial Indoor PM2.5 Level</td>
+								<td><input class = "c_table_input" id="PM2_5_Ci" value=360></td>
+								<td>ppm</td>
+								<td>Ci</td>
+							</tr>
+							
+							<tr> <!--CO2 Production-->
+								<td class="table_heading">PM2.5 Production</td>
+							</tr>
+							<tr>
+								<td>Number of People in Room</td>
+								<td><input type="number" class = "c_table_input" id="PM2_5_n" value=3 ></td>
+								<td></td>
+								<td>n</td>
+							</tr>
+							
+							<tr>
+								<td>Purifier Air Flow Rate</td>
+								<td><input type="number" class = "c_table_input" id="PM2_5_Qm" value=400></td>
+								<td>m<sup>3</sup>/h</td>
+								<td>Qm</td>
+							</tr>
+							
+							<tr>
+								<td>One Time Purification Efficiency</td>
+								<td><input type="number" class = "c_table_input" id="PM2_5_e" value=100></td>
+								<td>%</td>
+								<td>e</td>
+							</tr>
+							
+							
+							<tr> <!--Room information-->
+								<td class="table_heading">Room Information</td>
+							</tr>
+							<tr>
+								<td>Ventilation Rate Per Person</td>
+								<td><input type="number" id="PM2_5_ventilation" value=5 class = "c_table_input"></td>
+								<td>L/s</td>
+								<td></td>
+							</tr>
+							
+							<tr>
+								<td>Total Ventilation Rate</td>
+								<td id="PM2_5_Q" class = "c_table_input"></td>
+								<td>m<sup>3</sup>/h</td>
+								<td>Q</td>
+							</tr>
+							<tr>
+								<td>Room Area</td>
+								<td><input type="number" class = "c_table_input" id="PM2_5_Area" value=40 step="0.01"></td>
+								<td>m<sup>2</sup></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Room height</td>
+								<td><input type="number" class = "c_table_input" id="PM2_5_height" value=2.8 step="0.01"></td>
+								<td>m</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>Room Volume</td>
+								<td class = "c_table_input" id="PM2_5_V"></td>
+								<td>m<sup>3</sup></td>
+								<td>V</td>
+							</tr>
+							
+							<tr> <!--Time-->
+								<td class="table_heading">Time</td>
+							</tr>
+							
+							<tr>
+								<td>Time After Purifier Start</td>
+								<td><input class = "c_table_input" id="PM2_5_t" value = 0.5></td>
+								<td>h</td>
+								<td>t</td>
+							</tr>
+							
+							
+						</table>
+						<div class="calculator_button" id="PM2_5_button" onclick="PM2_5_calculation()">start</div>
+					</div>					
+				</form>
+				
+				<div class="data_reference">
+					<img class="reference_pic" src="calculator_pic/PM_model.png" alt="pic for PM2.5 modeling">
+					
+					<table class="reference_table">
+					
+						<tr>
+							<td class="table_heading">WHO recommended PM2.5 level:   </td>
+							
+							<td class="reference_content">10 μg/m<sup>3</sup> annual mean
+<br>25 μg/m<sup>3</sup> 24-hour mean
+<br><a href="http://apps.who.int/iris/bitstream/10665/69477/1/WHO_SDE_PHE_OEH_06.02_eng.pdf">PDF, WHO's guidance on air pollution</a>
+   </td>
+						</tr>
+						
+						<tr>
+							<td class="table_heading"> Ventilation requirement for residential building  </td>
+							<td class="reference_content"> 2.5 L/s/person for residential building
+<br> <a href="https://en.wikipedia.org/wiki/Ventilation_(architecture)" >Same reference as on CO2 page from wikipedia</a>
+							</td>
+						</tr>
+						
+						<tr>
+							<td class="table_heading">  e 
+							<br>one time efficiency of purifier </td>
+							<td class="reference_content"> It  depends on the filter. Usually, HEPA filter has efficiency of 99.97% for PM2.5.
+<br>	<a href="http://www.abatement.com/patient-isolation/patient-isolation-info-resources-facts-about-true-hepa-filtration.html"> A HEPA filter website</a>	
+<br>	<a href="http://jd.zol.com.cn/523/5235448.html">   A test from a Chinese consumer on his own purifier  </a>					</td>
+						</tr>
+						<tr>
+							<td class="table_heading"> Qm
+<br>							air flow rate of purifier  </td>
+							<td class="reference_content"> About 400~750 m<sup>3</sup>/h
+<br> <a href="http://jd.zol.com.cn/523/5233221.html"> 3 common air purifier in China. </a>
+
+							</td>
+						</tr>
+						
+					
+					</table>
+				
+				</div>
+			</div>
+		
+		
+	
+			<div id="CO2_formula" class="formula">
+				<div id="CO2_f_closing" class="close" onclick="close_window('#CO2_formula');">x</div>
+				<h3>Defining the Model</h3>
+				<p>People in the room keep producing CO<sub>2</sub>, while the air exchange take away CO<sub>2</sub>. 
+				<br>As time pass by, the concentration of CO<sub>2</sub> indoor reaches a steady state. 
+				<br>In a room, the ventilation, which is the air exchange between indoor and outdoor, is Q. A person produces Qh amount of CO<sub>2</sub> per hour. The outdoor CO<sbu>2</sub> concentration is
+				Co.
+				</p>
+				<h3>Calculation</h3>
+				<p>Equation (1) represents the rate of change of CO<sub>2</sub> concentration.</p>
+				<p><img src="equation/CO2_e1.png"> (1)</p>
+				<p>The left-hand-side is change of total CO<sub>2</sub>indoor. Right-hand-side represents the gain of CO<sub>2</sub> through air exchange, and the gain of CO<sub>2</sub> from human.</p>
+				<p>Solving the differential equation, we have:</p>
+				<p><img src="equation/CO2_e2.png"> </p>
+				<p> At t=0, C = Co, which is the initial CO<sub>2</sub> concentration indoor</p>
+				<p><img src="equation/CO2_e3.png" class="equation"> => <img src="equation/CO2_e4.png" class="equation"></p>
+				<p> At steady state, when t ->∞, we have</p>
+				<p><img src="equation/CO2_e5.png" > </p>
+				
+				
+			</div>
+			
+			<div id="PM2_5_formula" class="formula">
+				<div id="CO2_f_closing" class="close" onclick="close_window('#PM2_5_formula');">x</div>
+				<h3>Defining the Model</h3>
+				<p>Outdoor air with PM2.5 keeps getting in to the room. It mixes with in door air. Then this mixed air is cleaned by the air purifier.</p>
+				<p>The initial indoor PM2.5 level is Ci and the outdoor PM2.5 level is Co. The volumn of air purifier cleaning per hour is Qm. The efficiency is e. The function of concentration of PM2.5 (C) and time is calculated by the following differential equation.
+				</p>
+				
+				<h3>Calculation</h3>
+				<p>Left hand side of the equation means the change of amount of PM2.5 within the room.
+Right hand side refer to PM2.5 go in and out of the room (Q),  and PM2.5 taken away from purifier (Qm).
+</p>
+				<p><img src="equation/PM_e1.png" class="equation"> (1)</p>
+				<p>Solving it, we have</p>
+				<p><img src="equation/PM_e2.png"> </p>
+				<p><img src="equation/PM_e3.png" class="equation"></p>
+				<p>At steady state, when t->∞:</p>
+				<p><img src="equation/PM_e4.png" class="equation"></p>
+				
+			</div>
+		
+		</div>
+		
+
+	
+	</body>
+		
+		
+	</html>
