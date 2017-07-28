@@ -1,0 +1,165 @@
+/*table style          */
+body {
+	background-color: #f4f4f4
+}
+
+
+.table_heading {
+	font-weight:bold;
+}
+
+.formula {
+	display:block;
+	position: absolute;
+	top:40px;
+	left:5px;
+	border: 1px solid black;
+	height:460px;
+	width:320px;
+	background-color:white;
+	overflow: scroll;
+	z-index: 10;
+	overflow-x: hidden;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.c_table_input {
+	width: 60px;
+	text-align:right;
+}
+/* big div styling*/
+#CO2_calculator {
+	display: none;
+}
+#PM2_5_calculator{
+	
+}
+
+.data_reference {
+display:block;	
+float:left;
+width: 600px;
+border: 1px solid black;
+background-color:white;
+height:550px;
+}
+
+
+.result_div {
+	display:block;
+	float: left;
+	width: 600px;
+	border: 1px solid black;	
+	background-color: white;
+	z-index: 3;
+	border-radius: 5px;
+	height: 550px;
+	
+}
+
+
+
+.table_headings {
+	width:200px;
+	border: 1px solid black;	
+}
+.reference_content {
+	width: 500px;
+	background-color: #e0e0e0;
+	border: 1px solid black;
+}
+.reference_pic {
+	width:600px;	
+	height: 250px;
+}
+
+.reference_table {
+	border: 1px solid black;
+
+}
+
+div {
+	position: relative;
+}
+
+
+
+/*detail styling*/
+#CO2_calculator_header {
+	z-index: 1;
+	background-color: #e8e8e8;
+}
+
+#CO2_calculator{
+	/*border: 1px solid black;*/
+}
+
+#PM2_5_calculator_header {
+	z-index: 5;
+	background-color: white;
+}
+
+#PM2_5_formula {
+	display:none;
+}
+
+
+.calculator_header {
+		background-color: white;
+		cursor: pointer;
+		display: inline;
+		margin-left: 20px;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+		border-top: 1px solid black;
+		padding: 3px;
+		border-radius: 2px;
+		
+}
+
+.calculator_button {
+	cursor: pointer;
+	border: 1px solid black;
+	border-radius: 2px;
+	width: 40px;
+	float:bottom;
+	margin:5px;
+	padding:3px;
+	position:absolute;
+	bottom: 0px;
+}
+
+.t_c1{	width:200px;}
+.t_c2{width:80px;}
+.t_c3{width:60px;}
+.t_c4{}
+	
+.equation {
+	height:40px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.close {
+	position:absolute;
+	top:5px;
+	right:5px;
+	border-radius: 2px;
+	border: 1px solid black;
+	height: 13px;
+	width:13px;
+	cursor: pointer;
+}
+
+.button {
+	cursor: pointer;
+	text-align:left;
+}
+
+.formula {
+	display:none;
+	
+}
